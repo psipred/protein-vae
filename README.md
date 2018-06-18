@@ -38,16 +38,12 @@ if new_metal:
     name="prots_nomet"
     ...
 ```
-The `name` is the name not including `.npy` of the file being used (that needs to be placed on the current directory) of protein(s) you wish to alter. So the input file will be a numpy binary of size `L x 3088` where the last 8 metal binding flags are changed in accordance with what you want metal binding you want to add. 
+The `name` is the name not including `.npy` of the file being used (that needs to be placed on the current directory) of protein(s) you wish to alter. So the input file will be a numpy binary of size `L x 3088` where the last 8 metal binding flags are changed in accordance with what you want metal binding you want to add. If you;ve got that sorted then just run the script.
 
 <b> Encoding and decoding separately</b>
 
+In order to do these just make a function that is a part of the network module that looks like the forward pass but only uses the layers you intend of using i.e. for decoding or encoding. From there add whatever you like at the end of the script to call these functions and encode or decode data. 
 
-For inference we have provided 
-
-To encode/decode a protein sequence:
-
-To add a metal binding site to a protein sequence:
-
-To generate a protein sequence for a given topology string:
+### Task 2
+This is generating a protein sequence for a given topology string and the scripts are located in the fold_gen folder. 
 
