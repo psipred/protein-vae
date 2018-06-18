@@ -31,7 +31,7 @@ Read through the command line arguments in the files in order to understand what
 
 First make sure that that `cuda=False` and `train=False` in the script. The network is capable of running inference very quickly on just a cpu. From there make sure that `new_metal=True`. At the bottom of the script you will see 
 
-```
+```Python
 if new_metal:
     name="prots_nomet"
     ...
