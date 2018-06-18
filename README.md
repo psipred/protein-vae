@@ -21,6 +21,8 @@ The two tasks this work approaches is adding a metal binding site to a protein s
 ### Task 1
 This is adding a metal binding site to a protein sequence. The files for this task as located in the metal_gen folder. Aside from the model file in the folder folder, the main script is the `metal_VAE_pytorch.py`. This file can be run from the command line with several arguments that can be seen by looking at the source. The code itself contains explanations for its use, but more specifically, it can be used for training a model or producing samples of a protein similar to another protein provided. 
 
+Note the model provided and thus inference was trained and can be used with the `nostruc` dataset. 
+
 <b> Training </b>
 
 In the case of training please get in contact for the datasets, however if you have correctly formated data you should be able to use that instead. A model has been provided for a network with a latent dimension of 16 which was used in the paper. The dataset can be specified by command line args as either `struc` or `nostruc`. These are numpy `.npy` files of size `L x 4353` and `L x 3088` where `L` is the number of examples in the dataset. Both datasets have one-hot encoded sequences as the first 3080 dimensions and the next 8 as the binary switches for metal binding. The `struc` dataset contains an extra 1265 dimensions that describe the input data.  
@@ -36,7 +38,7 @@ if new_metal:
     name="prots_nomet"
     ...
 ```
-
+The `name` is the name not including `.npy` of the file being used (that needs to be placed on the current directory) of protein(s) you wish to alter. So the input file will be a numpy binary of size `L x 3088` where the last 8 metal binding flags are changed in accordance with what you want metal binding you want to add. 
 
 
 For inference we have provided 
