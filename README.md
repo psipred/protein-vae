@@ -40,6 +40,8 @@ if new_metal:
 ```
 The `name` is the name not including `.npy` of the file being used (that needs to be placed on the current directory) of protein(s) you wish to alter. So the input file will be a numpy binary of size `L x 3088` where the last 8 metal binding flags are changed in accordance with what you want metal binding you want to add. 
 
+<b> Encoding and decoding separately</b>
+
 
 For inference we have provided 
 
