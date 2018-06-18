@@ -17,7 +17,7 @@ The work describes a variational autoencoder that can add metal binding sites to
 The two tasks this work approaches is adding a metal binding site to a protein sequence and generating a protein sequence for a given topology string. The first is described as Task 1 and the second as Task 2. Below are descriptions for using the trained models.
 
 ### Task 1
-
+This is adding a metal binding site to a protein sequence. The files for this task as located in the metal_gen folder. Aside from the model file in the folder folder, the main script is the `metal_VAE_pytorch.py`.  
 
 To encode/decode a protein sequence:
 
