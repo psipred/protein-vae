@@ -11,6 +11,7 @@ The work describes a variational autoencoder that can add metal binding sites to
 * pytorch 3.1
 * sklearn 0.19.1
 * numpy 1.14.1
+* lark 0.0.4
 
 Neural networks are built using the module system in pytorch and some utility functions from sklearn are used for metrics etc.
 
