@@ -48,7 +48,7 @@ from sklearn.model_selection import train_test_split as tts
 parser = argparse.ArgumentParser()
 parser.add_argument("-infile", type=str,
         help="file with sequence", default="examples/seq2seq_example.txt")# its either struc or nostruc
-parser.add_argument("-numout", type=str,
+parser.add_argument("-numout", type=int,
         help="number of sequences generated", default=10)
 
 args = parser.parse_args()
