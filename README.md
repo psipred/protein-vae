@@ -41,7 +41,7 @@ Each one of these methods is run with its own python script. Before going any fu
 If you run one of the scripts without providing a sequence it will default use one of the example sequences. Below are examples of how to use each one of the scripts with the default examples. 
 
 ### 1. Seq-to-Seq Example
-1. **Input File Preparation**
+**1. Input File Preparation**
 
 Make sure you have a text file or fasta file with a single sequence in it. For example, in the [seq2seq_example.txt
 ](produce_sequences/examples/seq2seq_example.txt) you'll find the following: 
@@ -50,15 +50,15 @@ AEVPSGEQLFNSNCSACHIGGNNVIISHKTLRKEALEKYAMNSLEAIRYQVVNGKNAMPAFGGRLNEEEIDAIATYVLGQ
 ```
 Only provide one sequence in a given file (you can still output multiple based on the one). If you wish you can pad the sequence up to 140 characters long with a '-' symbol as above however this is not necessary (see the Seq-to-Metal-Seq example). Sequences longer than 140 will be chopped. If you do not provide a sequence the default example will be used. 
 
-2. **Run the Script**
+**2. Run the Script**
 
 Run the following command to produce sequences from the input file (the default has been used)
 ```console
 user@computer:~$ python seq_to_seq.py -infile examples/seq2seq_example.txt -numout 10
 ```
-The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. 
+The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. If you do not provide values for the two command line arguments the script defaults to producing 10 sequences from the default example. 
 
-3. **Output Example**
+**3. Output Example**
 
 Running the script in step 2 outputs 10 sequences and provides the average sequence identity between the sequences produced and the original input sequence. This is outputed to `stdout` Here is an example:
 ```
@@ -78,7 +78,7 @@ ADLANGAKIFSANCAACHAGGGNAIMPTKTLKKNALEKNGMNSIEAITYQVTNGKNAMPAFKGRLSEEDIEDVAAYVLEQ
 
 ### 2. Seq-to-Metal-Seq
 
-1. **Input File Preparation**
+**1. Input File Preparation**
 
 Note this is very similar to Seq-to-Seq example. Make sure you have a text file or fasta file with a single sequence in it. For example, in the [seq2metalseq_example.txt](produce_sequences/examples/seq2metalseq_example.txt) you'll find the following: 
 ```
@@ -96,15 +96,15 @@ You also need to decide which metal you want the model to try and insert a bindi
 * Cd
 * Ni 
 
-2. **Run the Script**
+**2. Run the Script**
 
 Run the following command to produce sequences from the input file (the default has been used)
 ```console
 user@computer:~$ python seq_to_metalseq.py -infile examples/seq2metalseq_example.txt -numout 10 -metal Fe
 ```
-The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. The `-metal` argument is the two letter atomic code (one of the above 8) of the one metal you wish to use. 
+The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. The `-metal` argument is the two letter atomic code (one of the above 8) of the one metal you wish to use. If you do not provide values for the three command line arguments the script defaults to producing 10 sequences from the default example inserting Fe binding. 
 
-3. **Output Example**
+**3. Output Example**
 
 Running the script in step 2 outputs 10 sequences and provides the average sequence identity between the sequences produced and the original input sequence. This is outputed to `stdout` Here is an example:
 ```
@@ -124,9 +124,42 @@ DTDSESELKEAFRVADKDRNGPDSACKLRHVMLNGIEKLTDKEVDEMIREADIAEDGQVNYEEFVMT
 
 ### 3. Grammer to Seq
 
+**1. Input File Preparation**
 
+Make sure you have a text file that contains a single grammar string in it as defined in the linked paper. For example, in the [gram2seq_example.txt](produce_sequences/examples/gram2seq_example.txt) you'll find the following: 
+```
++B+0-C+0+B+2-B+1
+```
+Only provide one grammar string in a given file (you can still output multiple sequences based on the one grammar string). If you do not provide a grammar string the default example will be used. 
 
+**2. Run the Script**
 
+Run the following command to produce sequences from the input file (the default has been used)
+```console
+user@computer:~$ python gram_to_seq.py -infile examples/gram2seq_example.txt -numout 10
+```
+The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. If you do not provide values for the two command line arguments the script defaults to producing 10 sequences from the default example. 
+
+**3. Output Example**
+
+Running the script in step 2 outputs 10 sequences and provides these outputed to `stdout` Here is an example:
+```
+ESGYAVVCDTTCSYDGECNNECTCCCLKVKQKGNDGGYCWLWECGCLCLGAPVLVPEDTKCK
+KKGCLVSRGTGCGSGCSNNNCAKGLKISNGAKGKEGHRGYKCGCGCFCWPDR
+CDGYLVESKTGCGFCGLNNSCCNLCCNKNGAKAGYCACGYKCKCECLPLPLPN
+RDGYPVHDKGCKISCFGNNYCWKECKKKGKSKGYCYCWWLACWCYGLPDPEKVWDYA
+KKGYPVVSDDCCKYCCLNNKYCNYCCNKCGAKSGYCAWCCKSGCACWCLDLPK
+ERDGYIADPTNCGYTCANNSCCNGLCTKNGAKAGYCAWIGPYGKACWCIPLPDKVP
+KDYYPKDDKTCCSCCFNNNYCNKECKKEGKASGYCYGWCPACWCWCLPDDE
+KKGKYINDGTNCKYTCANNAKNNCCDKKCGAKGGYGHWGYPFGKACWCFPLPE
+KRGYLVVKNTNCKYSCFNLGYCNYCCTKCGAKSGYCSWGYCYGNACWCKPLPDKVPIRPPGKC
+DRGYLVVSDTGCKYVCYNNSYNKYCDRKCKNKAEYYGFGWLFGYGCWCLPLPEPVWIKIVDC
+
+```
+
+## Editing the Software
+
+If you'd like to edit the software we have provided training scripts that are self contained, along with trained models that can be loaded in. The directories 
 
 
 
