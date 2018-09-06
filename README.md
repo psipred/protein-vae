@@ -36,8 +36,15 @@ Before using our software please read the paper as linked to at the top of these
 2. **Seq to Metal-Seq:** Providing an initial sequence that does not bind to a metal and returning a the same sequence with variation that is more likely to bind a specified metal. 
 3. **Grammar to Seq:** Providing a grammar string (see the paper) and producing a sequence that is likely to fold to the topology described in the grammar string. 
 
-Each one of these methods is run with its own python script. Before going any further make sure you are in the [protein-vae/produce_sequences/](protein-vae/produce_sequences/)
+Each one of these methods is run with its own python script. Before going any further make sure you are in the [produce_sequences](produce_sequences/). Below we have provided examples for running each one of the scripts and what the input and output should look like. We have also provided example sequences (as found in the [examples](produce_sequences/examples/) directory). 
 
+If you run one of the scripts without providing a sequence it will default use one of the example sequences. 
+
+### Seq to Seq
+
+### Seq to Metal-Seq
+
+### Grammer to Seq
 
 
 
