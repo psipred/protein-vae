@@ -159,7 +159,7 @@ DRGYLVVSDTGCKYVCYNNSYNKYCDRKCKNKAEYYGFGWLFGYGCWCLPLPEPVWIKIVDC
 
 ## Editing the Software
 
-If you'd like to edit the software we have provided training scripts that are self contained, along with trained models that can be loaded in. The directories 
+If you'd like to edit the software we have provided training scripts that are self contained, along with trained models that can be loaded in. The directories [metal_gen](/metal_gen/) and [fold_gen](/fold_gen/) contain the scripts for experiments involving generating metal binding proteins and experiments producing sequences for a given fold, respectively. These scripts also contain the ability to perform inference however this much be specified by altering the script. Instructions are contained with the script.  
 
 
 
