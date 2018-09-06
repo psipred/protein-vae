@@ -24,7 +24,10 @@ If you wish to extend our work note that we have configured the general use scri
 ### Installation
 
 Installing our software is incredibly easy. Navigate to the directory you wish to store the software in and simply
+```console
+user@computer:~$ whoami
 
+```
 
 
 ## Usage
