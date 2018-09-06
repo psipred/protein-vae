@@ -38,9 +38,28 @@ Before using our software please read the paper as linked to at the top of these
 
 Each one of these methods is run with its own python script. Before going any further make sure you are in the [produce_sequences](produce_sequences/). Below we have provided examples for running each one of the scripts and what the input and output should look like. We have also provided example sequences (as found in the [examples](produce_sequences/examples/) directory). 
 
-If you run one of the scripts without providing a sequence it will default use one of the example sequences. 
+If you run one of the scripts without providing a sequence it will default use one of the example sequences. Below are examples of how to use each one of the scripts with the default examples. 
 
 ### Seq to Seq
+1. Make sure you have a text file or fasta file with a single sequence in it. For example, in the [seq2seq_example.txt
+](produce_sequences/examples/seq2seq_example.txt) you'll find the following 
+```
+AEVPSGEQLFNSNCSACHIGGNNVIISHKTLRKEALEKYAMNSLEAIRYQVVNGKNAMPAFGGRLNEEEIDAIATYVLGQAELD--------------------------------------------------------
+```
+Only provide one sequence in a given file (you can still output multiple based on the one). Make sure to pad the sequence up to 140 characters long with a '-' symbol. Sequences longer than 140 will be chopped. 
+
+
+
+This model is run using the following command 
+```console
+user@computer:~$ python git@github.com:psipred/protein-vae.git
+```
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-infile", type=str,
+        help="file with sequence", default="examples/seq2seq_example.txt")# its either struc or nostruc
+parser.add_argument("-numout", type=str,
+        help="number of sequences generated", default=10)
 
 ### Seq to Metal-Seq
 
