@@ -32,10 +32,17 @@ You are now in the directory to run the scripts to produce sequences. Producing 
 
 ## Running the software
 Before using our software please read the paper as linked to at the top of these instructions. There are three different methods of producing sequences that this software provides:
-* **Seq to Seq**: Providing an initial sequence to return a similar sequence with some variation
-* **Seq to Metal-Seq:** Providing an initial sequence that does not bind to a metal and returning a the same sequence with variation that is more likely to bind a specified metal. 
-* **Grammar to Seq:** Providing a grammar string (see the paper) and producing a sequence that is likely to fold to the topology described in the grammar string. 
+1.**Seq to Seq**: Providing an initial sequence to return a similar sequence with some variation
+1.**Seq to Metal-Seq:** Providing an initial sequence that does not bind to a metal and returning a the same sequence with variation that is more likely to bind a specified metal. 
+1.**Grammar to Seq:** Providing a grammar string (see the paper) and producing a sequence that is likely to fold to the topology described in the grammar string. 
+
 Each one of these 
+
+
+
+
+
+
 
 
 
