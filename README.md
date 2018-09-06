@@ -40,8 +40,8 @@ Each one of these methods is run with its own python script. Before going any fu
 
 If you run one of the scripts without providing a sequence it will default use one of the example sequences. Below are examples of how to use each one of the scripts with the default examples. 
 
-### Seq-to-Seq Example
-1. *Input File Preparation*
+### 1. Seq-to-Seq Example
+1. Input File Preparation
 
 Make sure you have a text file or fasta file with a single sequence in it. For example, in the [seq2seq_example.txt
 ](produce_sequences/examples/seq2seq_example.txt) you'll find the following: 
@@ -50,7 +50,7 @@ AEVPSGEQLFNSNCSACHIGGNNVIISHKTLRKEALEKYAMNSLEAIRYQVVNGKNAMPAFGGRLNEEEIDAIATYVLGQ
 ```
 Only provide one sequence in a given file (you can still output multiple based on the one). Make sure to pad the sequence up to 140 characters long with a '-' symbol. Sequences longer than 140 will be chopped. If you do not provide a sequence the 
 
-2. *Run the Script!*
+2. Run the Script
 
 Run the following command to produce sequences from the input file (the default has been used)
 ```console
@@ -58,7 +58,7 @@ user@computer:~$ python seq_to_seq.py -infile examples/seq2seq_example.txt -numo
 ```
 The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. 
 
-3. *Output Example*
+3. Output Example
 
 Running the script in step 2 outputs 10 sequences and provides the average sequence identity between the sequences produced and the original input sequence. This is outputed to `stdout` Here is an example:
 ```
@@ -76,11 +76,43 @@ ADLANGAKIFSANCAACHAGGGNAIMPTKTLKKNALEKNGMNSIEAITYQVTNGKNAMPAFKGRLSEEDIEDVAAYVLEQ
 
 ```
 
+### 2. Seq to Metal-Seq
+
+1. Input File Preparation
+
+Make sure you have a text file or fasta file with a single sequence in it. For example, in the [seq2metalseq_example.txt](produce_sequences/examples/seq2metalseq_example.txt) you'll find the following: 
+```
+DTDSEEEIKEAFKVFDKDGNGYISAAELRHVMTNLGEKLSDNEVDEMIREADVDGDGQINYEEFVKMMLSK
+```
+Only provide one sequence in a given file (you can still output multiple based on the one). If you wish you can pad the sequence up to 140 characters long with a '-' symbol however this is not necessary. Sequences longer than 140 will be chopped. If you do not provide a sequence the default example will be used. 
+
+2. Run the Script
+
+Run the following command to produce sequences from the input file (the default has been used)
+```console
+user@computer:~$ python seq_to_seq.py -infile examples/seq2seq_example.txt -numout 10
+```
+The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. 
+
+3. Output Example
+
+Running the script in step 2 outputs 10 sequences and provides the average sequence identity between the sequences produced and the original input sequence. This is outputed to `stdout` Here is an example:
+```
+Average Sequence Identity to Input: 80.1%
+DTDREEEIREAFRVFDKDGNGFISAAELRHVMTNLGEKLTDEEVDEMIREADIDGDGQVNYEEFVKMMEAK
+MTDTEEEIDEAFRVFDKDGNGYDSAAELRHVMTNLGEKLTDEEVDEMIREADIAGDGQVNYEEFVTMMTAK
+DTSSEEEIDEAFRVFDKDGNGFISAAELRHVMTNLGEKLTDEEVDEMIREADNAGDGQDNYEEFVTMMTVK
+DTDEEEKIREAFRDFDKSDNEFDSAAELRHVMTAGGEKLTDEEVDEMIDGADMDDDGQDFDEEFDGMMTAK
+DSDTEEEIKEAFRVFDKDGNGYISAAELRHVMTNVGEKLTDEEVDEMIREADIDGDGQVNYEEFVVMMTAK
+DTDSEEEIREAFRVFDKDGNGFISAAELRHVMTNLGEKLTDEEVDEMIREADIAGDGQVNYEEFVKMMTAK
+DTDSEEEIREAFRVFDKSDNGFISAAELRHLMTNLGEKLTDEEVDEMIREADIDGDGQINYEEFVKMMLAK
+DTDREEEIREAFRVFKKSGNELISAAELRHVMTPLGEKLTDEEVDEMIREAIIDGDGQVNYEEFVGMMKDK
+DTDSEEEIREAFRVFDKDGNGFISAAELRHVMTNLGEKLTDEEVDEMIREADIAGDGQVNYEEFVGMMTAK
+DTDSESELKEAFRVADKDRNGPDSACKLRHVMLNGIEKLTDKEVDEMIREADIAEDGQVNYEEFVMT
+```
 
 
-### Seq to Metal-Seq
-
-### Grammer to Seq
+### 3. Grammer to Seq
 
 
 
