@@ -86,15 +86,23 @@ DTDSEEEIKEAFKVFDKDGNGYISAAELRHVMTNLGEKLSDNEVDEMIREADVDGDGQINYEEFVKMMLSK
 ```
 Only provide one sequence in a given file (you can still output multiple based on the one). If you wish you can pad the sequence up to 140 characters long with a '-' symbol however this is not necessary. Sequences longer than 140 will be chopped. If you do not provide a sequence the default example will be used. 
 
-You also need to decide which metal you want the model to try and insert a binding site for. For example, if you choose Iron it will produce sequences more likely to bind the metal specified. The 8 metals you can choose from are
+You also need to decide which metal you want the model to try and insert a binding site for. For example, if you choose Iron it will produce sequences more likely to bind the metal specified. The 8 metals you can choose from are: 
+* Fe 
+* Zn
+* Ca
+* Na
+* Cu
+* Mg
+* Cd
+* Ni 
 
 2. Run the Script
 
 Run the following command to produce sequences from the input file (the default has been used)
 ```console
-user@computer:~$ python seq_to_seq.py -infile examples/seq2metalseq_example.txt -numout 10
+user@computer:~$ python seq_to_metalseq.py -infile examples/seq2metalseq_example.txt -numout 10 -metal Fe
 ```
-The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. 
+The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. The `-metal` argument is the two letter atomic code (one of the above 8) of the one metal you wish to use. 
 
 3. Output Example
 
