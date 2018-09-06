@@ -48,7 +48,7 @@ Make sure you have a text file or fasta file with a single sequence in it. For e
 ```
 AEVPSGEQLFNSNCSACHIGGNNVIISHKTLRKEALEKYAMNSLEAIRYQVVNGKNAMPAFGGRLNEEEIDAIATYVLGQAELD--------------------------------------------------------
 ```
-Only provide one sequence in a given file (you can still output multiple based on the one). Make sure to pad the sequence up to 140 characters long with a '-' symbol. Sequences longer than 140 will be chopped. If you do not provide a sequence the 
+Only provide one sequence in a given file (you can still output multiple based on the one). If you wish you can pad the sequence up to 140 characters long with a '-' symbol as above however this is not necessary (see the Seq-to-Metal-Seq example). Sequences longer than 140 will be chopped. If you do not provide a sequence the default example will be used. 
 
 2. Run the Script
 
@@ -76,21 +76,23 @@ ADLANGAKIFSANCAACHAGGGNAIMPTKTLKKNALEKNGMNSIEAITYQVTNGKNAMPAFKGRLSEEDIEDVAAYVLEQ
 
 ```
 
-### 2. Seq to Metal-Seq
+### 2. Seq-to-Metal-Seq
 
 1. Input File Preparation
 
-Make sure you have a text file or fasta file with a single sequence in it. For example, in the [seq2metalseq_example.txt](produce_sequences/examples/seq2metalseq_example.txt) you'll find the following: 
+Note this is very similar to Seq-to-Seq example. Make sure you have a text file or fasta file with a single sequence in it. For example, in the [seq2metalseq_example.txt](produce_sequences/examples/seq2metalseq_example.txt) you'll find the following: 
 ```
 DTDSEEEIKEAFKVFDKDGNGYISAAELRHVMTNLGEKLSDNEVDEMIREADVDGDGQINYEEFVKMMLSK
 ```
 Only provide one sequence in a given file (you can still output multiple based on the one). If you wish you can pad the sequence up to 140 characters long with a '-' symbol however this is not necessary. Sequences longer than 140 will be chopped. If you do not provide a sequence the default example will be used. 
 
+You also need to decide which metal you want the model to try and insert a binding site for. For example, if you choose Iron it will produce sequences more likely to bind the metal specified. The 8 metals you can choose from are
+
 2. Run the Script
 
 Run the following command to produce sequences from the input file (the default has been used)
 ```console
-user@computer:~$ python seq_to_seq.py -infile examples/seq2seq_example.txt -numout 10
+user@computer:~$ python seq_to_seq.py -infile examples/seq2metalseq_example.txt -numout 10
 ```
 The `-numout` argument is an integer input for the number of sequences you want to produce. Here we are producing 10 examples. 
 
