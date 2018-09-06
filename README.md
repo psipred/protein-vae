@@ -6,12 +6,15 @@ Greener JG, Moffat L and Jones DT, Design of metalloproteins and novel protein f
 
 The work describes a variational autoencoder that can add metal binding sites to protein sequences, or generate protein sequences for a given protein topology.
 
-## Dependencies
+## Getting Started
+
+### Dependencies
 * python 3.6
-* pytorch 3.1
+* pytorch 4.0
 * sklearn 0.19.1
 * numpy 1.14.1
 * lark 0.4.1
+
 
 Neural networks are built using the module system in pytorch and some utility functions from sklearn are used for metrics etc.
 
