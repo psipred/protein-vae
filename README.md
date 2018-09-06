@@ -7,7 +7,7 @@ Greener JG, Moffat L and Jones DT, Design of metalloproteins and novel protein f
 The work describes a variational autoencoder that can add metal binding sites to protein sequences, or generate protein sequences for a given protein topology.
 
 ## Getting Started
-This instructions will get a copy of this repo on your system and running so you can produce sequences with our models or expand on our work. These files have been cleaned and minimized so they can be run using python with as few dependencies as possible
+This instructions will get a copy of this repo on your system and running so you can produce sequences with our models or expand on our work. These files have been cleaned and minimized so they can be run using python with as few dependencies as possible.
 
 ### Dependencies
 The follow are the packages needed to run our software. Our software uses python and leverages several python 
@@ -31,19 +31,18 @@ user@computer:~$ cd protein-vae/produce_sequences/
 You are now in the directory to run the scripts to produce sequences. Producing sequences is also very simple and is described below. 
 
 ## Running the software
-There are three different methods of producing sequences that this software provides:
-*<b>Seq to Seq:<\b> Providing an initial sequence to return a similar sequence with some variation
-*<b>Seq to Metal-Seq:<\b> Providing an initial sequence that does not bind metal and returning a the same sequence with variation that is more likely to bind a metal. 
+Before using our software please read the paper as linked to at the top of these instructions. There are three different methods of producing sequences that this software provides:
+* **Seq to Seq**: Providing an initial sequence to return a similar sequence with some variation
+* **Seq to Metal-Seq:** Providing an initial sequence that does not bind to a metal and returning a the same sequence with variation that is more likely to bind a specified metal. 
+* **Grammar to Seq:** Providing a grammar string (see the paper) and producing a sequence that is likely to fold to the topology described in the grammar string. 
+Each one of these 
 
+
+
+
+
+<!--
 The two tasks this work approaches are adding a metal binding site to a protein sequence and generating a protein sequence for a given topology string. The first is described as Task 1 and the second as Task 2. Below are descriptions for using the trained models.
-
-
-
-
-
-
-
-
 
 ### Task 1
 This is adding a metal binding site to a protein sequence. The files for this task are located in the metal_gen folder. Aside from the model file in the folder folder, the main script is the `metal_VAE_pytorch.py`. This file can be run from the command line with several arguments that can be seen by looking at the source. The code itself contains explanations for its use, but more specifically, it can be used for training a model or producing samples of a protein similar to another protein provided.
@@ -72,4 +71,4 @@ The `name` is the name not including `.npy` of the file being used (that needs t
 In order to do these just make a function that is a part of the network module that looks like the forward pass but only uses the layers you intend of using i.e. for decoding or encoding. From there add whatever you like at the end of the script to call these functions and encode or decode data.
 
 ### Task 2
-This is generating a protein sequence for a given topology string and the scripts are located in the fold_gen folder.
+This is generating a protein sequence for a given topology string and the scripts are located in the fold_gen folder.--->
