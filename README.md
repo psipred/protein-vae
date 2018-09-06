@@ -7,16 +7,25 @@ Greener JG, Moffat L and Jones DT, Design of metalloproteins and novel protein f
 The work describes a variational autoencoder that can add metal binding sites to protein sequences, or generate protein sequences for a given protein topology.
 
 ## Getting Started
+This instructions will get a copy of this repo on your system and running so you can produce sequences with our models or expand on our work. These files have been cleaned and minimized so they can be run using python with as few dependencies as possible
 
 ### Dependencies
-* python 3.6
-* pytorch 4.0
-* sklearn 0.19.1
-* numpy 1.14.1
-* lark 0.4.1
+The follow are the packages needed to run our software. Our software uses python and leverages several python 
+* [python 3.6](https://www.python.org/)
+* [pytorch 4.0](https://pytorch.org/)
+* [sklearn 0.19.1](http://scikit-learn.org/stable/)
+* [numpy 1.14.1](http://www.numpy.org/)
+* [lark-parser 0.4.1](https://github.com/lark-parser/lark)
+
+Follow the links to install the correct version of all of the packages. Note that installing pytorch can be a bit tricky but all of these packages can be easily install with [Anaconda](https://anaconda.org/). Using the `conda install` command from the Anaconda package is highly recommended. The lark-parser package is only needed if you wish to generate protein sequences using the model that takes in a strucure grammar to produce sequences (described more below). The neural networks are built using pytorch and some utility functions from sklearn are used for metrics, making proper installation critical. 
+
+If you wish to extend our work note that we have configured the general use scripts to run solely on cpu as they do not require the computational power of a GPU. However, the example training scripts provided can be run on GPU and contain switches and/or command line arguments to enable this. 
+
+### Installation
+
+Installing our software is incredibly easy. Navigate to the directory you wish to store the software in and simply
 
 
-Neural networks are built using the module system in pytorch and some utility functions from sklearn are used for metrics etc.
 
 ## Usage
 
