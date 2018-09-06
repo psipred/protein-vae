@@ -35,7 +35,8 @@ import torch.nn.functional as F
 
 import numpy as np
 import argparse
-
+Variable(
+        
 from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split as tts
@@ -98,7 +99,7 @@ else:
 
 
 if cuda:
-    torch.cuda.set_device(args_dict['device'])
+    os.environ["CUDA_VISIBLE_DEVICES"]=str(args_dict['device'])
 
 #spec batch size
 batch_size=args_dict['batch_size']
@@ -149,9 +150,9 @@ class feed_forward(torch.nn.Module):
         # Using reparameterization trick to sample from a gaussian
         
         if cuda:
-            eps = Variable(torch.randn(self.batch_size, self.hidden_sizes[-1])).cuda()
+            eps = torch.randn(self.batch_size, self.hidden_sizes[-1]).cuda()
         else:
-            eps = Variable(torch.randn(self.batch_size, self.hidden_sizes[-1]))
+            eps = torch.randn(self.batch_size, self.hidden_sizes[-1])
 	
         return mu + torch.exp(log_var / 2) * eps
     
@@ -254,11 +255,11 @@ if train:
                 x_batch = x_batch[:,:3080]
 
                 if cuda:
-                    X = Variable(torch.from_numpy(x_batch)).cuda().type(torch.cuda.FloatTensor)
-                    C = Variable(torch.from_numpy(code)).cuda().type(torch.cuda.FloatTensor)
+                    X = torch.from_numpy(x_batch).cuda().type(torch.cuda.FloatTensor)
+                    C = torch.from_numpy(code).cuda().type(torch.cuda.FloatTensor)
                 else:
-                    X = Variable(torch.from_numpy(x_batch)).type(torch.FloatTensor)
-                    C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
+                    X = torch.from_numpy(x_batch).type(torch.FloatTensor)
+                    C = torch.from_numpy(code).type(torch.FloatTensor)
 
                 
             else:
@@ -268,13 +269,13 @@ if train:
                 x_batch = x_batch[:,:3080]
 
                 if cuda:
-                    X = Variable(torch.from_numpy(x_batch)).cuda().type(torch.cuda.FloatTensor)
-                    C = Variable(torch.from_numpy(code)).cuda().type(torch.cuda.FloatTensor)
-                    S = Variable(torch.from_numpy(structure)).cuda().type(torch.cuda.FloatTensor) 
+                    X = torch.from_numpy(x_batch).cuda().type(torch.cuda.FloatTensor)
+                    C = torch.from_numpy(code).cuda().type(torch.cuda.FloatTensor)
+                    S = torch.from_numpy(structure).cuda().type(torch.cuda.FloatTensor) 
                 else:
-                    X = Variable(torch.from_numpy(x_batch)).type(torch.FloatTensor)
-                    C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
-                    S = Variable(torch.from_numpy(structure)).type(torch.FloatTensor)  
+                    X = torch.from_numpy(x_batch).type(torch.FloatTensor)
+                    C = torch.from_numpy(code).type(torch.FloatTensor)
+                    S = torch.from_numpy(structure).type(torch.FloatTensor)  
     
 
             
@@ -346,11 +347,11 @@ if train:
                 x_batch = x_batch[:,:3080]
 
                 if cuda:
-                    X = Variable(torch.from_numpy(x_batch)).cuda().type(torch.cuda.FloatTensor)
-                    C = Variable(torch.from_numpy(code)).cuda().type(torch.cuda.FloatTensor)
+                    X = torch.from_numpy(x_batch).cuda().type(torch.cuda.FloatTensor)
+                    C = torch.from_numpy(code).cuda().type(torch.cuda.FloatTensor)
                 else:
-                    X = Variable(torch.from_numpy(x_batch)).type(torch.FloatTensor)
-                    C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
+                    X = torch.from_numpy(x_batch).type(torch.FloatTensor)
+                    C = torch.from_numpy(code).type(torch.FloatTensor)
 
 
             else:
@@ -361,13 +362,13 @@ if train:
                 x_batch = x_batch[:,:3080]
 
                 if cuda:
-                    X = Variable(torch.from_numpy(x_batch)).cuda().type(torch.cuda.FloatTensor)
-                    C = Variable(torch.from_numpy(code)).cuda().type(torch.cuda.FloatTensor)
-                    S = Variable(torch.from_numpy(structure)).cuda().type(torch.cuda.FloatTensor)
+                    X = torch.from_numpy(x_batch).cuda().type(torch.cuda.FloatTensor)
+                    C = torch.from_numpy(code).cuda().type(torch.cuda.FloatTensor)
+                    S = torch.from_numpy(structure).cuda().type(torch.cuda.FloatTensor)
                 else:
-                    X = Variable(torch.from_numpy(x_batch)).type(torch.FloatTensor)
-                    C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
-                    S = Variable(torch.from_numpy(structure)).type(torch.FloatTensor)
+                    X = torch.from_numpy(x_batch).type(torch.FloatTensor)
+                    C = torch.from_numpy(code).type(torch.FloatTensor)
+                    S = torch.from_numpy(structure).type(torch.FloatTensor)
 
 
             if args_dict["dataset"]=="struc":
@@ -416,11 +417,11 @@ def newMetalBinder(model,data,name):
         x = np.tile(data[:3080],(model.batch_size,1))
 
         if cuda:
-            X = Variable(torch.from_numpy(x)).cuda().type(torch.cuda.FloatTensor)
-            C = Variable(torch.from_numpy(code)).cuda().type(torch.cuda.FloatTensor)
+            X = torch.from_numpy(x).cuda().type(torch.cuda.FloatTensor)
+            C = torch.from_numpy(code).cuda().type(torch.cuda.FloatTensor)
         else:
-            X = Variable(torch.from_numpy(x)).type(torch.FloatTensor)
-            C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
+            X = torch.from_numpy(x).type(torch.FloatTensor)
+            C = torch.from_numpy(code).type(torch.FloatTensor)
 
 
     else:
@@ -430,13 +431,13 @@ def newMetalBinder(model,data,name):
         x = np.tile(data[:3080],(model.batch_size,1))
 
         if cuda:
-            X = Variable(torch.from_numpy(x)).cuda().type(torch.cuda.FloatTensor)
-            C = Variable(torch.from_numpy(code)).cuda().type(torch.cuda.FloatTensor)
-            S = Variable(torch.from_numpy(structure)).cuda().type(torch.cuda.FloatTensor)
+            X = torch.from_numpy(x).cuda().type(torch.cuda.FloatTensor)
+            C = torch.from_numpy(code).cuda().type(torch.cuda.FloatTensor)
+            S = torch.from_numpy(structure).cuda().type(torch.cuda.FloatTensor)
         else:
-            X = Variable(torch.from_numpy(x)).type(torch.FloatTensor)
-            C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
-            S = Variable(torch.from_numpy(structure)).type(torch.FloatTensor)
+            X = torch.from_numpy(x).type(torch.FloatTensor)
+            C = torch.from_numpy(code).type(torch.FloatTensor)
+            S = torch.from_numpy(structure).type(torch.FloatTensor)
 
 
     if args_dict["dataset"]=="struc":

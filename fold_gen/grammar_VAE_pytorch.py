@@ -6,9 +6,16 @@ Created on Wed Oct 11 11:53:06 2017
 @author: Lewis Moffat aka. Groovy Dragon
 
 
-This script is an implimentation of a variational autoencoder in pytorch
-This isnt actually hierarchical it just uses a bunch of layers. Gave up on 
-bothering with more latent variables
+This script is an implimentation of a variational autoencoder in pytorch to 
+produce sequences based on a grammar. This contains the core of the model 
+which was used to train the model. If you wish to expand on upon our work this
+is the file to look at. 
+
+###############################################################################
+IF YOU WISH TO USE THE MODEL PLEASE LOOK AT THE SCRIPTS IN THE 
+produce_sequences FOLDER.
+###############################################################################
+
 
 CURRENT STATUS: WORKING
 
@@ -25,13 +32,15 @@ import torch.optim as optim
 import numpy as np
 from torch.autograd import Variable
 import torch.nn.functional as F
-#import dummyDataGen as dataGen
-#import visualizer as vs
+
+import os
 
 from sklearn.metrics import accuracy_score
 import datetime
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split as tts
+
+
 # =============================================================================
 # Initial Specs and Data Loading
 # =============================================================================
@@ -42,7 +51,6 @@ from sklearn.model_selection import train_test_split as tts
 want_data=False
 cuda=False
 load=True
-train=False
 test=False
 sanity_check=True
 generateNew=False
@@ -67,10 +75,9 @@ if want_data:
 X_dim = 5053#data.shape[1]
 y_dim = 5053#data.shape[1]
 
-
+device=0
 if cuda:
-    torch.cuda.set_device(2)
-
+    os.environ["CUDA_VISIBLE_DEVICES"]=str(device)
 
 
 #spec batch size
@@ -143,9 +150,9 @@ class feed_forward(torch.nn.Module):
         # Using reparameterization trick to sample from a gaussian
         
         if cuda:
-            eps = Variable(torch.randn(self.batch_size, self.hidden_sizes[-1])).cuda()
+            eps = torch.randn(self.batch_size, self.hidden_sizes[-1]).cuda()
         else:
-            eps = Variable(torch.randn(self.batch_size, self.hidden_sizes[-1]))
+            eps = torch.randn(self.batch_size, self.hidden_sizes[-1])
 	
         return mu + torch.exp(log_var / 2) * eps    
     
@@ -208,7 +215,7 @@ class feed_forward(torch.nn.Module):
         # Decoder #
         ###########
 
-        z = Variable(torch.randn(self.batch_size, self.hidden_sizes[-1]))
+        z = torch.randn(self.batch_size, self.hidden_sizes[-1])
         if cuda:
             z.cuda()
         # add the conditioned code
@@ -284,65 +291,7 @@ epoch_prog=[]
 # number of epochs
 num_epochs=1000
 
-if train:
-#    for its in range(num_epochs):
-#        ff.train()
-#        scores=[]
-#        data=shuffle(data)
-#        print("Grammar Cond. - Epoch: {0}/{1}  Latent: {2}".format(its,num_epochs,hidden_size[-1]))
-#        for it in range(n // batch_size):
-#            
-#            x_batch=data[it * batch_size: (it + 1) * batch_size]
-#            code = x_batch[:,-8:]
-#            structure = x_batch[:,3780:5045]
-#            x_batch = x_batch[:,:3080]
-#    
-#            if cuda:
-#                X = Variable(torch.from_numpy(x_batch)).cuda().type(torch.cuda.FloatTensor)
-#                C = Variable(torch.from_numpy(code)).cuda().type(torch.cuda.FloatTensor)
-#                S = Variable(torch.from_numpy(structure)).cuda().type(torch.cuda.FloatTensor) 
-#            else:
-#                X = Variable(torch.from_numpy(x_batch)).type(torch.FloatTensor)
-#                C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
-#                S = Variable(torch.from_numpy(structure)).type(torch.FloatTensor)
-#            #turf last gradients
-#            solver.zero_grad()
-#            
-#            # Forward
-#            x_sample, z_mu, z_var = ff(X, C, S)
-#            
-#            
-#            # Loss
-#            recon_loss = nn.binary_cross_entropy(x_sample, X, size_average=False) # by setting to false it sums instead of avg.
-#            kl_loss = 0.5 * torch.sum(torch.exp(z_var) + z_mu**2 - 1. - z_var)
-#            kl_loss = kl_loss*burn_in_counter
-#            loss = recon_loss + kl_loss
-#            
-#            
-#            # Backward
-#            loss.backward()
-#        
-#            # Update
-#            solver.step()
-#            
-#            
-#            
-#            len_aa=140*22
-#            y_label=np.argmax(x_batch[:,:len_aa].reshape(batch_size,-1,22), axis=2)
-#            y_pred =np.argmax(x_sample[:,:len_aa].cpu().data.numpy().reshape(batch_size,-1,22), axis=2)
-#            
-#            
-#            # can use argmax again for clipping as it uses the first instance of 21
-#            # loop with 256 examples is only about 3 milliseconds                      
-#            for idx, row in enumerate(y_label):
-#                scores.append(accuracy_score(row[:np.argmax(row)],y_pred[idx][:np.argmax(row)]))
-#        
-#        print("Tra Acc: {0}".format(np.mean(scores)))
-#        epoch_prog.append(np.mean(scores))        
-#        
-#        if its>300 and burn_in_counter<1.0:
-#            burn_in_counter+=0.003
-#
+if test:
         scores=[]
         
         ff.eval()
@@ -355,13 +304,13 @@ if train:
 
 
             if cuda:
-                X = Variable(torch.from_numpy(x_batch)).cuda().type(torch.cuda.FloatTensor)
-                C = Variable(torch.from_numpy(code)).cuda().type(torch.cuda.FloatTensor)
-                S = Variable(torch.from_numpy(structure)).cuda().type(torch.cuda.FloatTensor)
+                X = torch.from_numpy(x_batch).cuda().type(torch.cuda.FloatTensor)
+                C = torch.from_numpy(code).cuda().type(torch.cuda.FloatTensor)
+                S = torch.from_numpy(structure).cuda().type(torch.cuda.FloatTensor)
             else:
-                X = Variable(torch.from_numpy(x_batch)).type(torch.FloatTensor)
-                C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
-                S = Variable(torch.from_numpy(structure)).type(torch.FloatTensor)
+                X = torch.from_numpy(x_batch).type(torch.FloatTensor)
+                C = torch.from_numpy(code).type(torch.FloatTensor)
+                S = torch.from_numpy(structure).type(torch.FloatTensor)
                 
             # Forward
             x_sample, z_mu, z_var = ff(X, C, S)
@@ -389,9 +338,9 @@ def encoderQuick(model, data, name):
         structure = x_batch[:,3780:5045]
         x_batch = x_batch[:,:3080]
         
-        X = Variable(torch.from_numpy(x_batch)).type(torch.FloatTensor)
-        C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
-        S = Variable(torch.from_numpy(structure)).type(torch.FloatTensor)
+        X = torch.from_numpy(x_batch).type(torch.FloatTensor)
+        C = torch.from_numpy(code).type(torch.FloatTensor)
+        S = torch.from_numpy(structure).type(torch.FloatTensor)
         newRep = np.concatenate((newRep,model.encoder(X,C,S).data.numpy()),0)
     newRep=newRep.reshape((-1,16))
     #np.savetxt("reps.tsv",newRep,delimiter='\t')
@@ -415,9 +364,9 @@ def sanity(model, test_point,save_name,num_samp=50 ):
     
 
     
-    X = Variable(torch.from_numpy(test_point)).type(torch.FloatTensor)
-    C = Variable(torch.from_numpy(code_t)).type(torch.FloatTensor)
-    S = Variable(torch.from_numpy(structure_t)).type(torch.FloatTensor)
+    X = torch.from_numpy(test_point).type(torch.FloatTensor)
+    C = torch.from_numpy(code_t).type(torch.FloatTensor)
+    S = torch.from_numpy(structure_t).type(torch.FloatTensor)
                 
     # Forward
     x_sample, z_mu, z_var = model(X, C, S)
@@ -451,9 +400,9 @@ def newMetalBinder(model,data,name):
     C=np.tile(data[-8:],(model.batch_size,1))
     S=np.tile(data[3080:-8],(model.batch_size,1))
     # create tensors of the data
-    C=Variable(torch.from_numpy(C)).type(torch.FloatTensor)
-    S=Variable(torch.from_numpy(S)).type(torch.FloatTensor)
-    X=Variable(torch.from_numpy(x)).type(torch.FloatTensor)
+    C=torch.from_numpy(C).type(torch.FloatTensor)
+    S=torch.from_numpy(S).type(torch.FloatTensor)
+    X=torch.from_numpy(x).type(torch.FloatTensor)
     
     # Forward
     x_sample, _, _ = model(X, C, S)
@@ -481,8 +430,8 @@ def rawGen(model, gram, name):
     C=np.zeros((model.batch_size,8))
     S=np.tile(gram,(model.batch_size,1))
     #create a empty metal code for the sequence.
-    C=Variable(torch.from_numpy(C)).type(torch.FloatTensor)
-    S=Variable(torch.from_numpy(S)).type(torch.FloatTensor)
+    C=torch.from_numpy(C).type(torch.FloatTensor)
+    S=torch.from_numpy(S).type(torch.FloatTensor)
     
     x_sample=model.generator(C,S)    
     len_aa=140*22
@@ -506,13 +455,13 @@ def accTest(model, data):
 
 
         if cuda:
-            X = Variable(torch.from_numpy(x_batch)).cuda().type(torch.cuda.FloatTensor)
-            C = Variable(torch.from_numpy(code)).cuda().type(torch.cuda.FloatTensor)
-            S = Variable(torch.from_numpy(structure)).cuda().type(torch.cuda.FloatTensor)
+            X = torch.from_numpy(x_batch).cuda().type(torch.cuda.FloatTensor)
+            C = torch.from_numpy(code).cuda().type(torch.cuda.FloatTensor)
+            S = torch.from_numpy(structure).cuda().type(torch.cuda.FloatTensor)
         else:
-            X = Variable(torch.from_numpy(x_batch)).type(torch.FloatTensor)
-            C = Variable(torch.from_numpy(code)).type(torch.FloatTensor)
-            S = Variable(torch.from_numpy(structure)).type(torch.FloatTensor)
+            X = torch.from_numpy(x_batch).type(torch.FloatTensor)
+            C = torch.from_numpy(code).type(torch.FloatTensor)
+            S = torch.from_numpy(structure).type(torch.FloatTensor)
             
         # Forward
         x_sample, z_mu, z_var = ff(X, C, S)
