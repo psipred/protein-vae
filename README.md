@@ -23,12 +23,12 @@ If you wish to extend our work note that we have configured the general use scri
 
 ### Installation
 
-Installing our software is incredibly easy. Navigate to the directory you wish to store the software in and simply
+Installing our software is incredibly easy. Navigate to the directory you wish to store the software in and simply run the following from the command line. 
 ```console
-user@computer:~$ whoami
-
+user@computer:~$ git clone git@github.com:psipred/protein-vae.git
+user@computer:~$ cd protein-vae/produce_sequences/
 ```
-
+You are now in the directory to run the scripts to produce sequences. Producing sequences is also very simple and is described below. 
 
 ## Usage
 
