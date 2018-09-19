@@ -3,7 +3,7 @@
 """
 Created on Wed Sep  5 11:32:34 2018
 
-@author: moffatl
+@author: moffatl, Joe G Greener
 
 This script takes in a supplied grammar string e.g. "+B+0-C+0+B+2-B+1" in a 
 text document. This then takes this sequence and runs it through a forward pass

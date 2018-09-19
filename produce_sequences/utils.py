@@ -3,7 +3,7 @@
 """
 Created on Wed Sep  5 12:38:10 2018
 
-@author: moffatl
+@author: moffatl, Joe G Greener
 
 utility functions for going to and from matrix and sequence representations
 
