@@ -222,7 +222,7 @@ def rawGen(model, gram):
 with open(args_dict["infile"],'r') as in_file:
     seq=in_file.readlines()
 
-seq=seq[0]
+seq=seq[0].rstrip()
 
 # Definition of the grammar
 fold_parser = Lark(r"""
