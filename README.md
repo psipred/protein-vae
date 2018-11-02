@@ -2,7 +2,7 @@
 
 This repository provides code to accompany the paper:
 
-Greener JG, Moffat L and Jones DT, Design of metalloproteins and novel protein folds using variational autoencoders, 2018 - [link to pre-print](https://arxiv.org/abs/1806.09900)
+Greener JG, Moffat L and Jones DT, Design of metalloproteins and novel protein folds using variational autoencoders, *Scientific Reports* 8:16189, 2018 - [link](https://www.nature.com/articles/s41598-018-34533-1)
 
 The work describes a variational autoencoder that can add metal binding sites to protein sequences, or generate protein sequences for a given protein topology.
 
