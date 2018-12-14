@@ -163,4 +163,4 @@ If you'd like to edit the software we have provided training scripts that are se
 
 ### Dataset
 
-Our dataset is available upon request. Please email the primary contact as found in the linked paper.
+The assignments of Taylor topology strings to SCOP folds we used can be found in `topology_data`. Our dataset is available upon request. Please email the primary contact as found in the linked paper.
