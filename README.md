@@ -161,6 +161,10 @@ DRGYLVVSDTGCKYVCYNNSYNKYCDRKCKNKAEYYGFGWLFGYGCWCLPLPEPVWIKIVDC
 
 If you'd like to edit the software we have provided training scripts that are self contained, along with trained models that can be loaded in. The directories [metal_gen](/metal_gen/) and [fold_gen](/fold_gen/) contain the scripts for experiments involving generating metal binding proteins and experiments producing sequences for a given fold, respectively. These scripts also contain the ability to perform inference however this must be specified by altering the script. Instructions are contained with the script.  
 
-### Dataset
+## Datasets
 
-The assignments of Taylor topology strings to SCOP folds we used can be found in `topology_data`. Our dataset is available upon request. Please email the primary contact as found in the linked paper.
+The datasets used for training are available as [numpy binaries](http://bioinfadmin.cs.ucl.ac.uk/downloads/protein-vae/) to be read in with `numpy.load`:
+* `assembled_data_mb.npy` is the metal binding training data, size (147842, 3088). Each row is an example consisting of 22x140=3080 values for the sequence and 8 values for the metal binding flags (order as above).
+* `assembled_data_fold.npy` is the topology training data, size (104845, 4353). Each row is an example consisting of 22x140=3080 values for the sequence, 23x55=1265 values for the topology encoding and 8 values for the metal binding flags (order as above).
+
+The assignments of Taylor topology strings to SCOP folds we used can be found in [topology_data](/topology_data/).
