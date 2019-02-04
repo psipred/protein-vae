@@ -122,7 +122,7 @@ DTDSESELKEAFRVADKDRNGPDSACKLRHVMLNGIEKLTDKEVDEMIREADIAEDGQVNYEEFVMT
 ```
 
 
-### 3. Grammer to Seq
+### 3. Grammar to Seq
 
 **1. Input File Preparation**
 
@@ -156,6 +156,8 @@ KRGYLVVKNTNCKYSCFNLGYCNYCCTKCGAKSGYCSWGYCYGNACWCKPLPDKVPIRPPGKC
 DRGYLVVSDTGCKYVCYNNSYNKYCDRKCKNKAEYYGFGWLFGYGCWCLPLPEPVWIKIVDC
 
 ```
+
+The grammar is specified using the Lark package and can be found [here](https://github.com/psipred/protein-vae/blob/master/produce_sequences/gram_to_seq.py#L227-L314).
 
 ## Editing the Software
 
