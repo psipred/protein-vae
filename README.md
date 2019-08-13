@@ -12,7 +12,7 @@ These instructions will get a copy of this repo on your system and running so yo
 ### Dependencies
 The follow are the packages needed to run our software. Our software uses python and leverages several python packages:
 * [python 3.6](https://www.python.org/)
-* [pytorch 4.0](https://pytorch.org/)
+* [pytorch 0.4](https://pytorch.org/)
 * [sklearn 0.19.1](http://scikit-learn.org/stable/)
 * [numpy 1.14.1](http://www.numpy.org/)
 * [lark-parser 0.4.1](https://github.com/lark-parser/lark)
