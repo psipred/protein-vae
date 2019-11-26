@@ -169,4 +169,4 @@ The datasets used for training are available as [numpy binaries](http://bioinfad
 * `assembled_data_mb.npy` is the metal binding training data, size (147842, 3088). Each row is an example consisting of 22x140=3080 values for the sequence and 8 values for the metal binding flags (order as above).
 * `assembled_data_fold.npy` is the topology training data, size (104845, 4353). Each row is an example consisting of 22x140=3080 values for the sequence, 23x55=1265 values for the topology encoding and 8 values for the metal binding flags (order as above).
 
-The assignments of Taylor topology strings to SCOP folds we used can be found in [topology_data](/topology_data/).
+The assignments of Taylor topology strings to SCOP folds we used can be found in [topology_data](/topology_data/) along with the 3,785 PDB chain IDs used in the dataset.
