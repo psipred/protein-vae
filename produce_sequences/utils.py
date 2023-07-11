@@ -12,34 +12,30 @@ utility functions for going to and from matrix and sequence representations
 import numpy as np
 
 seq_len = 140
-gap_char = '-'
-spe_char = 'X'
+gap_char = "-"
+spe_char = "X"
 
-aas = ['G', 'A', 'L', 'M', 'F', 'W', 'K', 'Q', 'E', 'S',
-      'P', 'V', 'I', 'C', 'Y', 'H', 'R', 'N', 'D', 'T']
+AAS = list("GALMFWKQESPVICYHRNDT")
 
-seq_choices = aas + [spe_char, gap_char]
+seq_choices = AAS + [spe_char, gap_char]
+seq_index_map = {aa: i for i, aa in enumerate(seq_choices)}
 n_symbols = len(seq_choices)
+
 
 def seq_to_vec(seq):
    assert len(seq) <= seq_len
-   seq_ind = [seq_choices.index(gap_char)] * seq_len
+   seq_ind = [seq_index_map[gap_char]] * seq_len
    for i, aa in enumerate(seq):
-       seq_ind[i] = seq_choices.index(aa)
-   vec = [0] * seq_len * n_symbols
+       seq_ind[i] = seq_index_map[aa]
+   vec = np.zeros(seq_len * n_symbols, dtype=np.uint8)
    for i, j in enumerate(seq_ind):
        vec[i * n_symbols + j] = 1
-   return np.array(vec)
+   return vec
 
 
-# Convert output vector back to human-readable form
 def vec_to_seq(vec):
-    seq_info = list(vec[:3080])
-    seq = ""
-    for i in range(seq_len):
-        seq += seq_choices[np.argmax(seq_info[i*n_symbols:(i+1)*n_symbols])]
-    
-    #seq=seq[:seq.find("-")]
-    seq=seq.replace("-","")
-    
-    return seq
+    "Convert output vector back to human-readable form."
+    return "".join(
+       seq_choices[vec[i: i + n_symbols].argmax()]
+       for i in range(0, seq_len * n_symbols, n_symbols)
+    ).replace("-", "")
