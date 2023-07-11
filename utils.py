@@ -10,6 +10,7 @@ utility functions for going to and from matrix and sequence representations
 """
 
 import numpy as np
+from scipy.sparse import load_npz
 
 seq_len = 140
 gap_char = "-"
@@ -39,3 +40,10 @@ def vec_to_seq(vec):
        seq_choices[vec[i: i + n_symbols].argmax()]
        for i in range(0, seq_len * n_symbols, n_symbols)
     ).replace("-", "")
+
+
+def load_data(path):
+   "Load compiled sequence data."
+   if path.endswith(".npz"):
+      return load_npz(path).todense()
+   return np.load(path).astype(np.uint8)
