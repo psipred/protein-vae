@@ -140,7 +140,7 @@ def main():
         condition_size=1273,
         batch_size=args.numout,
     )
-    state_dict = torch.load("models/grammar16_cutoff", map_location=lambda storage, _: storage)
+    state_dict = torch.load("models/grammar16_cutoff.p", map_location=lambda storage, _: storage)
     state_dict = {k.lower(): v for k, v in state_dict.items()}
     model.load_state_dict(state_dict)
 

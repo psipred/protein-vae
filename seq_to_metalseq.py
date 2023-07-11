@@ -56,7 +56,7 @@ def newMetalBinder(model, data, code):
         print(utils.vec_to_seq(seq))
 
 
-def load_model(path="models/metal16_nostruc", batch_size=1):
+def load_model(path="models/metal16_nostruc.p", batch_size=1):
     model = vae.VariationalAutoEncoder(
         input_size=3088,
         hidden_sizes=[512, 256, 128, 16],
