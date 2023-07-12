@@ -118,15 +118,14 @@ def get_struc_vector(topology_string):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-infile", type=str,
-            help="file with sequence", default="examples/gram2seq_example.txt")  # either struc or nostruc
-    parser.add_argument("-numout", type=int, help="number of sequences generated", default=10)
+    parser.add_argument("--infile", type=str,
+            help="file with sequence", default="examples/gram2seq_example.txt")
+    parser.add_argument("--numout", type=int, help="number of sequences generated", default=10)
     args = parser.parse_args()
 
     model = vae.make_autoencoder(True, 16, "models/grammar16_cutoff.p")
-    # read in the sequence
     with open(args.infile, "r") as f:
-        seq = f.readlines()[0].rstrip()
+        seq = f.read().rstrip()
 
     code = np.zeros(8)  # empty metal code
     struc = get_struc_vector(seq)
