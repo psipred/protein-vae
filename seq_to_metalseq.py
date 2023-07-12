@@ -21,13 +21,12 @@ import argparse
 
 import numpy as np
 import torch
-from sklearn.metrics import accuracy_score
 
 import utils
 import vae
 
 
-def newMetalBinder(model, data, code):
+def newMetalBinder(model, data, code, num_samples):
     """
     Generate a new sequence based on a metal code.
 
@@ -35,38 +34,18 @@ def newMetalBinder(model, data, code):
     flags. Fold is optional.
     """
     model.eval()
-    
-    batch_size = model.batch_size
-    code = torch.FloatTensor(code).tile(batch_size, 1)
-    x = torch.FloatTensor(data[:3080]).tile(batch_size, 1)
+    code = torch.as_tensor(code).float().tile(num_samples, 1)
+    x = torch.as_tensor(data[:3080]).float().tile(num_samples, 1)
     with torch.no_grad():
         x_sample, *_ = model(x, code)
 
-    y_label = x.reshape(batch_size, -1, 22).argmax(-1)
-    y_pred = x_sample.reshape(batch_size, -1, 22).argmax(-1)
-
-    scores = [
-        accuracy_score(row[:row.argmax()], y_pred[i][:row.argmax()])
-        for i, row in enumerate(y_label)
-    ]
+    y_label = model.extract_label(x)
+    y_pred = model.extract_label(x_sample)
+    scores = model.compute_scores(y_pred, y_label)
     print(f"Average Sequence Identity to Input: {np.mean(scores):.1%}")
     
-    out_seqs = x_sample.cpu().numpy()
-    for seq in out_seqs:
+    for seq in x_sample:
         print(utils.vec_to_seq(seq))
-
-
-def load_model(path="models/metal16_nostruc.p", batch_size=1):
-    model = vae.VariationalAutoEncoder(
-        input_size=3088,
-        hidden_sizes=[512, 256, 128, 16],
-        condition_size=8,
-        batch_size=batch_size,
-    )
-    state_dict = torch.load(path, map_location=lambda storage, _: storage)
-    state_dict = {k.lower(): v for k, v in state_dict.items()}
-    model.load_state_dict(state_dict)
-    return model
 
 
 def parse_fasta(path):
@@ -94,12 +73,12 @@ def main():
     parser.add_argument("--metal", type=str, choices=metals, default="Fe")
     args = parser.parse_args()
 
-    model = load_model(batch_size=args.numout)
+    model = vae.make_autoencoder(False, 16, "models/metal16_nostruc.p")
     code = np.zeros(8, dtype=np.uint8)
     code[metals_dict[args.metal]] = 1
     for vec in parse_fasta(args.infile):
         print(f"Input sequence:\n{utils.vec_to_seq(vec)}\n")
-        newMetalBinder(model, vec, code)
+        newMetalBinder(model, vec, code, args.numout)
         print()
 
 

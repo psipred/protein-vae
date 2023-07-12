@@ -25,7 +25,8 @@ import argparse
 import numpy as np
 
 import utils
-from seq_to_metalseq import load_model, newMetalBinder, parse_fasta
+import vae
+from seq_to_metalseq import newMetalBinder, parse_fasta
 
 
 def main():
@@ -36,11 +37,11 @@ def main():
             help="number of sequences generated", default=10)
     args = parser.parse_args()
 
-    model = load_model(batch_size=args.numout)
+    model = vae.make_autoencoder(False, 16, "models/metal16_nostruc.p")
     code = np.zeros(8, dtype=np.uint8)
     for vec in parse_fasta(args.infile):
         print(f"Input sequence:\n{utils.vec_to_seq(vec)}\n")
-        newMetalBinder(model, vec, code)
+        newMetalBinder(model, vec, code, args.numout)
         print()
 
 

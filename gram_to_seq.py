@@ -104,7 +104,7 @@ def get_rules(parse_tree):
         yield 'P -> ' + inner[2]
 
 
-def get_vector(topology_string):
+def get_struc_vector(topology_string):
     "Get the one-hot encoding vector from a topology string."
     t = fold_parser.parse(topology_string)
     rules = list(get_rules(t))
@@ -116,40 +116,23 @@ def get_vector(topology_string):
     return np.array(v)
 
 
-def rawGen(model, gram):
-    """Generate a raw sequence from the model using ancestral sampling."""
-    model.eval()
-    # create a empty metal code for the sequence.
-    code = torch.zeros(model.batch_size, 8)
-    struc = torch.FloatTensor(gram).tile(model.batch_size, 1)
-    with torch.no_grad():
-        for seq in model.generator(code, struc):
-            print(utils.vec_to_seq(seq))
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-infile", type=str,
-            help="file with sequence", default="examples/gram2seq_example.txt")# its either struc or nostruc
+            help="file with sequence", default="examples/gram2seq_example.txt")  # either struc or nostruc
     parser.add_argument("-numout", type=int, help="number of sequences generated", default=10)
     args = parser.parse_args()
 
-    model = vae.VariationalAutoEncoder(
-        input_size=4353,
-        hidden_sizes=[512, 256, 128, 16],
-        condition_size=1273,
-        batch_size=args.numout,
-    )
-    state_dict = torch.load("models/grammar16_cutoff.p", map_location=lambda storage, _: storage)
-    state_dict = {k.lower(): v for k, v in state_dict.items()}
-    model.load_state_dict(state_dict)
-
+    model = vae.make_autoencoder(True, 16, "models/grammar16_cutoff.p")
     # read in the sequence
     with open(args.infile, "r") as f:
         seq = f.readlines()[0].rstrip()
 
-    grammar = get_vector(seq)
-    rawGen(model, grammar)
+    code = np.zeros(8)  # empty metal code
+    struc = get_struc_vector(seq)
+    with torch.no_grad():
+        for seq in model.generator(code, struc, num_samples=args.numout):
+            print(utils.vec_to_seq(seq))
 
 
 if __name__ == "__main__":
