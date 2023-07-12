@@ -43,7 +43,7 @@ class VariationalAutoEncoder(nn.Module):
         self.code_size = 8  # hard coded
         self.struc_size = condition_size - self.code_size
 
-        self.fc = nn.Linear(input_size, hidden_sizes[0])  # 2 for bidirection
+        self.fc = nn.Linear(input_size, hidden_sizes[0])
         self.bn = nn.BatchNorm1d(hidden_sizes[0])
         self.fc1 = nn.Linear(hidden_sizes[0], hidden_sizes[1])
         self.bn1 = nn.BatchNorm1d(hidden_sizes[1])
@@ -89,19 +89,19 @@ class VariationalAutoEncoder(nn.Module):
 
     def encoder(self, x, code, struc=None):
         x = self.condition(x, code, struc)
-        out1 = F.relu(self.bn(self.fc(x)))
-        out2 = F.relu(self.bn1(self.fc1(out1)))
-        out3 = F.relu(self.bn2(self.fc2(out2)))
+        out1 = self.bn(self.fc(x)).relu()
+        out2 = self.bn1(self.fc1(out1)).relu()
+        out3 = self.bn2(self.fc2(out2)).relu()
         mu = self.fc3_mu(out3)
         sig = self.fc3_sig(out3)
         return mu, sig
 
     def decoder(self, z, code, struc=None):
         z = self.condition(z, code, struc)
-        out4 = F.relu(self.bn4(self.fc4(z)))
-        out5 = F.relu(self.bn5(self.fc5(out4)))
-        out6 = F.relu(self.bn6(self.fc6(out5)))
-        out7 = F.sigmoid(self.fc7(out6))
+        out4 = self.bn4(self.fc4(z)).relu()
+        out5 = self.bn5(self.fc5(out4)).relu()
+        out6 = self.bn6(self.fc6(out5)).relu()
+        out7 = self.fc7(out6).sigmoid()
         return out7
 
     def extract_label(self, x):
@@ -147,7 +147,9 @@ def train(model, data, args):
     num_epochs = args.num_epochs
     dataset = make_dataset(data, args.struc)
     rng = torch.Generator().manual_seed(0)
-    train_set, test_set = random_split(dataset, lengths=[0.85, 0.15], generator=rng)
+    train_size = round(0.85 * len(dataset))
+    test_size = len(dataset) - train_size
+    train_set, test_set = random_split(dataset, lengths=[train_size, test_size], generator=rng)
     train_loader = DataLoader(train_set, batch_size=args.batch_size, shuffle=True)
     test_loader = DataLoader(test_set, batch_size=args.batch_size, shuffle=False)
 
