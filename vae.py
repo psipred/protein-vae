@@ -29,7 +29,7 @@ from utils import load_data
 
 
 class VariationalAutoEncoder(nn.Module):
-    def __init__(self, input_size, hidden_sizes, condition_size, batch_size=1):
+    def __init__(self, input_size, hidden_sizes, condition_size):
         super().__init__()
 
         self.input_size = input_size
@@ -37,7 +37,6 @@ class VariationalAutoEncoder(nn.Module):
         self.hidden_sizes = hidden_sizes
         self.condition_size = condition_size
         self.latent_size = hidden_sizes[-1]
-        self.batch_size = batch_size
 
         self.x_size = input_size - condition_size
         self.code_size = 8  # hard coded
@@ -133,27 +132,26 @@ def make_autoencoder(struc, latent_dim, load_path=None):
     return model.eval()
 
 
-def make_dataset(data, struc=False):
+def make_dataset(data, model):
     data = torch.tensor(data)
-    x = data[:, :3080]
-    code = data[:, -8:]
-    if struc:
-        struc = data[:, 3080:-8]
+    x = data[:, :model.x_size]
+    code = data[:, -model.code_size:]
+    if model.struc_size:
+        struc = data[:, model.x_size:-model.code_size]
         return Dataset(x, code, struc)
     return Dataset(x, code)
 
 
-def train(model, data, args):
-    num_epochs = args.num_epochs
-    dataset = make_dataset(data, args.struc)
+def train(model, data, lr=5e-4, batch_size=10000, num_epochs=1000):
+    dataset = make_dataset(data, model)
     rng = torch.Generator().manual_seed(0)
     train_size = round(0.85 * len(dataset))
     test_size = len(dataset) - train_size
     train_set, test_set = random_split(dataset, lengths=[train_size, test_size], generator=rng)
-    train_loader = DataLoader(train_set, batch_size=args.batch_size, shuffle=True)
-    test_loader = DataLoader(test_set, batch_size=args.batch_size, shuffle=False)
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
+    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False)
 
-    optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    optimizer = optim.Adam(model.parameters(), lr=lr)
     for epoch in tqdm(range(num_epochs), "Epochs"):
         kl_loss_scale = np.clip((epoch - 300) * 0.003, 0.0, 1.0)
         model.train()
@@ -211,7 +209,7 @@ def main():
 
     data = load_data(args.data)
     model = vae.make_autoencoder(args.struc, args.latent_dim, args.load_path).to(device)
-    train(model, data, args)
+    train(model, data, args.lr, args.batch_size, args.num_epochs)
     if args.save_path:
         torch.save(model.state_dict(), args.save_path)
 
